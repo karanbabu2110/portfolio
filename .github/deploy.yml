@@ -28,4 +28,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ._
+          publish_dir: ./build
