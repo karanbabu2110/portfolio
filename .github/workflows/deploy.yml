@@ -3,33 +3,42 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main  # deploy on push to main branch
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '22.19.0'
+          cache: 'yarn'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: yarn install
 
+      # Step 4: Build React app
       - name: Build React App
         run: |
           yarn build
-          cp build/index.html build/404.html
+          # Copy index.html to 404.html for SPA routing
+          node -e "require('fs').copyFileSync('build/index.html','build/404.html')"
+          # Create .nojekyll to allow files starting with _
           touch build/.nojekyll
 
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          keep_files: true  # optional: prevents accidental deletion of other files on gh-pages branch
+          # Optional: specify branch (default is gh-pages)
+          # publish_branch: gh-pages
