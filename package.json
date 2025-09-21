@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "./",
   "dependencies": {
     "@fontsource/fira-code": "^5.2.7",
     "@fontsource/jetbrains-mono": "^5.2.8",
