@@ -1,4 +1,4 @@
-name: Deploy React App to GitHub Pages (Debuggable)
+name: Build & Deploy React (CRACO) to GitHub Pages
 
 on:
   push:
@@ -8,45 +8,44 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Use Node.js 18
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build
+      - name: Build app
         run: yarn build
 
       - name: Show build files (debug)
         run: |
-          echo "ROOT of build:"
+          echo "===== build root ====="
           ls -la build || true
           echo ""
-          echo "CSS files:"
+          echo "===== css ====="
           ls -la build/static/css || true
           echo ""
-          echo "JS files:"
+          echo "===== js ====="
           ls -la build/static/js || true
           echo ""
-          echo "index.html head:"
+          echo "===== index.html head ====="
           head -n 40 build/index.html || true
 
-      - name: Upload build artifact (for manual inspection)
-        uses: actions/upload-artifact@v4
-        with:
-          name: github-pages
-          path: build
+      - name: Copy index.html to 404.html (SPA routing)
+        run: |
+          # Linux runner
+          cp build/index.html build/404.html || true
 
-      - name: Copy index.html to 404.html
-        run: cp build/index.html build/404.html
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (push build dir to gh-pages)
         uses: peaceiris/actions-gh-pages@v5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
