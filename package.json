@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://karanbabu2110.github.io/portfolio",
+  "homepage": "https://karanbabu.dev",
   "dependencies": {
     "@fontsource/fira-code": "^5.2.7",
     "@fontsource/jetbrains-mono": "^5.2.8",
@@ -62,8 +62,9 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
+    "postbuild": "copy build\\index.html build\\404.html",
     "test": "craco test",
-    "predeploy": "npm run build",
+    "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
   "browserslist": {
