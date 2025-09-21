@@ -1,7 +1,4 @@
-import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { Button } from './ui/button';
-import { Moon, Sun, Download } from 'lucide-react';
 import { mockData } from '../data/mock';
 
 const Header = ({ scrollToSection }) => {
@@ -50,7 +47,7 @@ const Header = ({ scrollToSection }) => {
           </nav>
 
           <div className="flex items-center space-x-3">
-            <Button
+            {/* <Button
               onClick={downloadPDF}
               variant="outline"
               size="sm"
@@ -58,8 +55,8 @@ const Header = ({ scrollToSection }) => {
             >
               <Download className="h-4 w-4" />
               <span>Resume</span>
-            </Button>
-            
+            </Button> */}
+{/*             
             <Button
               onClick={toggleTheme}
               variant="ghost"
@@ -71,7 +68,7 @@ const Header = ({ scrollToSection }) => {
               ) : (
                 <Sun className="h-5 w-5" />
               )}
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>
